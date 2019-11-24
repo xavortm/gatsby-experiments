@@ -45,6 +45,11 @@ module.exports = {
           "**/users",
           "**/menus",
         ],
+        verboseOutput: true,
+        searchAndReplaceContentUrls: {
+          sourceUrl: "http://gastby-wordpress.ex/",
+          replacementUrl: "http://localhost:8000",
+        },
       }
     }
   ],
