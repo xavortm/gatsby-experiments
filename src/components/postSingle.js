@@ -1,19 +1,30 @@
-import React, { Component } from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Layout from './layout';
 
-class PostSingle extends Component {
+const PostSingle = props => {
+  return (
+    <Layout>
+      <div className="entry">
+        <h1 className="entry-title">{props.title}</h1>
+        <div
+          className="entry-content"
+          dangerouslySetInnerHTML={{ __html: props.content }}
+        ></div>
+      </div>
+    </Layout>
+  );
+};
 
-  render() {    
-    return (
-      <Layout>
-        <div className="entry">
-          <h1 className="entry-title">{this.props.title}</h1>
-          <div className="entry-content" dangerouslySetInnerHTML={{__html: this.props.content}}></div>
-        </div>
-      </Layout>
-    );
-  }
-}
+PostSingle.propTypes = {
+  title: PropTypes.string,
+  content: PropTypes.string
+};
+
+PostSingle.defaultProps = {
+  title: '',
+  content: ''
+};
 
 export default PostSingle;
