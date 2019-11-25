@@ -1,12 +1,12 @@
-import { Link, useStaticQuery, graphql } from "gatsby";
-import PropTypes from "prop-types";
-import React from "react";
+import { Link, useStaticQuery, graphql } from 'gatsby';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const Header = ({ siteTitle }) => {
   const data = useStaticQuery(graphql`
     query SiteMenuQuery {
       allWordpressWpApiMenusMenusItems {
-        edges{
+        edges {
           node {
             slug
             name
@@ -21,12 +21,15 @@ const Header = ({ siteTitle }) => {
     }
   `);
 
-  const menuItems = data.allWordpressWpApiMenusMenusItems.edges[0].node.items.map(prop => {
-    return (
-      // TODO: Make the URL actually work well
-      <Link key={prop.object_id} to={prop.url}>{prop.title}</Link>
-    )
-  });
+  const menuItems = data.allWordpressWpApiMenusMenusItems.edges[0].node.items.map(
+    prop => {
+      return (
+        <li key={prop.object_id} className="menu-item">
+          <Link to={prop.url}>{prop.title}</Link>
+        </li>
+      );
+    }
+  );
 
   return (
     <header className="site-header">
@@ -34,17 +37,17 @@ const Header = ({ siteTitle }) => {
         <Link to="/">{siteTitle}</Link>
       </h1>
 
-      { menuItems }
+      <ul className="site-navigation">{menuItems}</ul>
     </header>
   );
-}
+};
 
 Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
+  siteTitle: PropTypes.string
+};
 
 Header.defaultProps = {
-  siteTitle: '',
-}
+  siteTitle: ''
+};
 
 export default Header;

@@ -1,25 +1,27 @@
-import React, { Component } from "react";
-import { graphql } from "gatsby";
+import React from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
 
-import PostSingle from "../components/postSingle";
+import PostSingle from '../components/postSingle';
 
-class PostPage extends Component {
-  render() {
-    const post = this.props.data.wordpressPost;
+const Post = props => {
+  // Data stores what we grab from the qeury above.
+  const data = props.data.wordpressPost;
 
-    return (
-      <PostSingle {...post}></PostSingle>
-    )
-  }
-}
+  // Easiest way to run a GraphQL query inside a function component.
+  useStaticQuery(graphql`
+    query($id: String) {
+      wordpressPost(id: { eq: $id }) {
+        title
+        content
+      }
+    }
+  `);
 
-export default PostPage;
+  return (
+    <div>
+      <PostSingle {...data}></PostSingle>
+    </div>
+  );
+};
 
-export const postQuery = graphql`
-query($id: String!) {
-  wordpressPost(id: { eq: $id }) {
-    title,
-    content
-  }
-}
-`
+export default Post;
